@@ -30,7 +30,10 @@ desktop.ini
 
 # reference files (not needed in prod)
 v1-dark-gold.html
-images/
+/images/
 public/images/ref_*.jpg
 
 Logo/
+
+# allow logo images in public
+!public/images/logo*.png
