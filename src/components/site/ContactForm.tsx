@@ -1,0 +1,130 @@
+"use client";
+
+import { useState } from "react";
+import { submitContactForm } from "@/actions";
+import { toast } from "sonner";
+import type { PricingPlan } from "@/types";
+
+interface ContactFormProps {
+  plans: PricingPlan[];
+}
+
+export function ContactForm({ plans }: ContactFormProps) {
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    const fd = new FormData(e.currentTarget);
+    const result = await submitContactForm({
+      name: fd.get("name") as string,
+      email: (fd.get("email") as string) || undefined,
+      phone: (fd.get("phone") as string) || undefined,
+      goal: (fd.get("goal") as string) || undefined,
+      message: (fd.get("message") as string) || undefined,
+      preferred_plan: (fd.get("preferred_plan") as string) || undefined,
+    });
+
+    setLoading(false);
+
+    if (result.success) {
+      toast.success("Application submitted! Dr. Marwan will be in touch.");
+      (e.target as HTMLFormElement).reset();
+    } else {
+      toast.error("Something went wrong. Please try again.");
+    }
+  }
+
+  return (
+    <section className="py-20 lg:py-28 px-6 lg:px-20 bg-surface">
+      <div className="max-w-[600px] mx-auto">
+        <div className="text-center mb-10">
+          <div className="text-[0.65rem] tracking-[7px] uppercase text-accent font-semibold mb-4">
+            Apply Now
+          </div>
+          <h2 className="font-display text-[clamp(2rem,4vw,3rem)] leading-none tracking-wide">
+            START YOUR JOURNEY
+          </h2>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
+              Full Name *
+            </label>
+            <input
+              name="name"
+              required
+              className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
+              placeholder="Your name"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
+                Email
+              </label>
+              <input
+                name="email"
+                type="email"
+                className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
+                placeholder="email@example.com"
+              />
+            </div>
+            <div>
+              <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
+                Phone / WhatsApp
+              </label>
+              <input
+                name="phone"
+                className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
+                placeholder="+20 xxx xxx xxxx"
+              />
+            </div>
+          </div>
+
+          {plans.length > 0 && (
+            <div>
+              <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
+                Interested In
+              </label>
+              <select
+                name="preferred_plan"
+                className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
+              >
+                <option value="">Select a program...</option>
+                {plans.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name} — ${p.price}/{p.period}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          <div>
+            <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
+              Your Goal
+            </label>
+            <textarea
+              name="goal"
+              rows={3}
+              className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors resize-none"
+              placeholder="What do you want to achieve?"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-accent text-bg py-4 text-[0.8rem] font-semibold tracking-[2.5px] uppercase hover:bg-accent-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Submitting..." : "Submit Application"}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+}

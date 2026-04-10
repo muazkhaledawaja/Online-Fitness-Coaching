@@ -1,0 +1,9 @@
+export { Navbar } from "./Navbar";
+export { Hero } from "./Hero";
+export { Marquee } from "./Marquee";
+export { About } from "./About";
+export { Gallery } from "./Gallery";
+export { Programs } from "./Programs";
+export { Reveal } from "./Reveal";
+export { ContactForm } from "./ContactForm";
+export { Process, Testimonials, CTA, Footer } from "./Sections";

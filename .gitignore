@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# env files
+.env
+.env.local
+.env.production
+.env*.local
+
+# vercel
+.vercel
+
+# debug
+npm-debug.log*
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# reference files (not needed in prod)
+v1-dark-gold.html
+images/
+public/images/ref_*.jpg
+
+Logo/
