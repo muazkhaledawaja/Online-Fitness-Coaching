@@ -1,5 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import type { ContentMap, PricingPlan } from "@/types";
 import { Reveal } from "./Reveal";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProgramsProps {
   content: ContentMap;
@@ -7,7 +11,10 @@ interface ProgramsProps {
 }
 
 export function Programs({ content, plans }: ProgramsProps) {
+  const { t, lang } = useLanguage();
   const c = content.programs ?? {};
+  const tx = (dbVal: string | undefined, fallback: string) =>
+    lang === "ar" ? fallback : dbVal || fallback;
 
   return (
     <section id="programs" className="py-20 lg:py-28 px-6 lg:px-20 bg-surface">
@@ -15,28 +22,30 @@ export function Programs({ content, plans }: ProgramsProps) {
         <div className="flex items-center gap-4 mb-4">
           <span className="w-8 h-px bg-accent" />
           <span className="text-[0.65rem] tracking-[7px] uppercase text-accent font-semibold">
-            {c.tag || "Programs"}
+            {tx(c.tag, t.programs.tag)}
           </span>
         </div>
       </Reveal>
       <Reveal delay={0.05}>
         <h2 className="font-display text-[clamp(2.5rem,4.5vw,4rem)] leading-none tracking-wide mb-2">
-          {c.title || "CHOOSE YOUR PATH"}
+          {tx(c.title, t.programs.title)}
         </h2>
       </Reveal>
       <Reveal delay={0.1}>
         <p className="text-muted text-[0.95rem] max-w-[480px] leading-relaxed font-light">
-          {c.subtitle || "Every plan is fully personalized."}
+          {tx(c.subtitle, t.programs.subtitle)}
         </p>
       </Reveal>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 mt-10 border border-accent/[0.08]">
         {plans.map((plan, i) => (
-          <Reveal key={plan.id} delay={i * 0.08}>
-            <div
-              className={`p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-accent/[0.08] last:border-r-0 last:border-b-0 relative transition-colors hover:bg-accent/[0.02] ${
-                plan.is_featured ? "bg-accent/[0.04]" : ""
-              }`}
+          <Reveal key={plan.id} delay={i * 0.1}>
+            <motion.div
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className={`p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-accent/[0.08] last:border-r-0 last:border-b-0 relative cursor-default ${
+                plan.is_featured ? "bg-accent/[0.04]" : "hover:bg-accent/[0.02]"
+              } transition-colors`}
             >
               {plan.is_featured && (
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-accent" />
@@ -64,17 +73,14 @@ export function Programs({ content, plans }: ProgramsProps) {
               {plan.features.length > 0 && (
                 <ul className="mt-5 pt-5 border-t border-accent/[0.08] space-y-2">
                   {plan.features.map((f, fi) => (
-                    <li
-                      key={fi}
-                      className="text-[0.78rem] text-muted pl-5 relative font-light"
-                    >
+                    <li key={fi} className="text-[0.78rem] text-muted pl-5 relative font-light">
                       <span className="absolute left-0 top-1/2 w-1.5 h-px bg-accent" />
                       {f}
                     </li>
                   ))}
                 </ul>
               )}
-            </div>
+            </motion.div>
           </Reveal>
         ))}
       </div>

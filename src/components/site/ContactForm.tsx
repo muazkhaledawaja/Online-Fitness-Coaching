@@ -4,6 +4,7 @@ import { useState } from "react";
 import { submitContactForm } from "@/actions";
 import { toast } from "sonner";
 import type { PricingPlan } from "@/types";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ContactFormProps {
   plans: PricingPlan[];
@@ -11,6 +12,7 @@ interface ContactFormProps {
 
 export function ContactForm({ plans }: ContactFormProps) {
   const [loading, setLoading] = useState(false);
+  const { t } = useLanguage();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -41,46 +43,46 @@ export function ContactForm({ plans }: ContactFormProps) {
       <div className="max-w-[600px] mx-auto">
         <div className="text-center mb-10">
           <div className="text-[0.65rem] tracking-[7px] uppercase text-accent font-semibold mb-4">
-            Apply Now
+            {t.form.tag}
           </div>
           <h2 className="font-display text-[clamp(2rem,4vw,3rem)] leading-none tracking-wide">
-            START YOUR JOURNEY
+            {t.form.title}
           </h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
-              Full Name *
+              {t.form.name}{t.form.nameSuffix}
             </label>
             <input
               name="name"
               required
               className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
-              placeholder="Your name"
+              placeholder={t.form.namePlaceholder}
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
-                Email
+                {t.form.email}
               </label>
               <input
                 name="email"
                 type="email"
                 className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
-                placeholder="email@example.com"
+                placeholder={t.form.emailPlaceholder}
               />
             </div>
             <div>
               <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
-                Phone / WhatsApp
+                {t.form.phone}
               </label>
               <input
                 name="phone"
                 className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
-                placeholder="+20 xxx xxx xxxx"
+                placeholder={t.form.phonePlaceholder}
               />
             </div>
           </div>
@@ -88,13 +90,13 @@ export function ContactForm({ plans }: ContactFormProps) {
           {plans.length > 0 && (
             <div>
               <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
-                Interested In
+                {t.form.interestedIn}
               </label>
               <select
                 name="preferred_plan"
                 className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors"
               >
-                <option value="">Select a program...</option>
+                <option value="">{t.form.selectProgram}</option>
                 {plans.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.name} — ${p.price}/{p.period}
@@ -106,22 +108,22 @@ export function ContactForm({ plans }: ContactFormProps) {
 
           <div>
             <label className="block text-[0.7rem] tracking-[2px] uppercase text-muted mb-2">
-              Your Goal
+              {t.form.goal}
             </label>
             <textarea
               name="goal"
               rows={3}
               className="w-full bg-bg border border-accent/[0.08] px-4 py-3 text-foreground text-[0.9rem] focus:border-accent/30 focus:outline-none transition-colors resize-none"
-              placeholder="What do you want to achieve?"
+              placeholder={t.form.goalPlaceholder}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-accent text-bg py-4 text-[0.8rem] font-semibold tracking-[2.5px] uppercase hover:bg-accent-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-accent text-bg py-4 text-[0.8rem] font-semibold tracking-[2.5px] uppercase hover:bg-accent-hover hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(201,168,76,0.2)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Submitting..." : "Submit Application"}
+            {loading ? t.form.submitting : t.form.submit}
           </button>
         </form>
       </div>

@@ -5,14 +5,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#08080a",
-        surface: "#0f0f12",
-        "surface-2": "#161619",
-        accent: "#c9a84c",
-        "accent-hover": "#dbbf6a",
-        "accent-dim": "rgba(201, 168, 76, 0.1)",
-        muted: "#7a7670",
-        foreground: "#f0ece6",
+        bg: "rgb(var(--color-bg) / <alpha-value>)",
+        surface: "rgb(var(--color-surface) / <alpha-value>)",
+        "surface-2": "rgb(var(--color-surface-2) / <alpha-value>)",
+        accent: "rgb(var(--color-accent) / <alpha-value>)",
+        "accent-hover": "rgb(var(--color-accent-hover) / <alpha-value>)",
+        muted: "rgb(var(--color-muted) / <alpha-value>)",
+        foreground: "rgb(var(--color-foreground) / <alpha-value>)",
       },
       fontFamily: {
         display: ['"Bebas Neue"', "sans-serif"],

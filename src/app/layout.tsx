@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,10 +20,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="font-body antialiased text-foreground bg-bg" suppressHydrationWarning>
-        {children}
-        <Toaster position="bottom-right" theme="dark" />
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body
+        className="font-body antialiased text-foreground bg-bg"
+        suppressHydrationWarning
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          themes={["dark", "light"]}
+          disableTransitionOnChange={false}
+        >
+          <LanguageProvider>
+            {children}
+            <Toaster position="bottom-right" theme="system" />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

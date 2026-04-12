@@ -11,6 +11,7 @@ import {
   CTA,
   ContactForm,
   Footer,
+  ScrollProgress,
 } from "@/components/site";
 
 export const revalidate = 60; // ISR: revalidate every 60 seconds
@@ -21,6 +22,7 @@ export default async function HomePage() {
 
   return (
     <main className="bg-bg text-foreground min-h-screen">
+      <ScrollProgress />
       <Navbar />
       <Hero content={content} stats={stats} />
       <Marquee items={marquee} />

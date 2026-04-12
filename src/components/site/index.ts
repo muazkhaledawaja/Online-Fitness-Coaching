@@ -7,3 +7,6 @@ export { Programs } from "./Programs";
 export { Reveal } from "./Reveal";
 export { ContactForm } from "./ContactForm";
 export { Process, Testimonials, CTA, Footer } from "./Sections";
+export { ScrollProgress } from "./ScrollProgress";
+export { AnimatedCounter } from "./AnimatedCounter";
+export { ThemeToggle, LangToggle } from "./Controls";

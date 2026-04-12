@@ -2,35 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700;800&display=swap");
 
-/* Film grain overlay */
+/* =============================================
+   THEME VARIABLES
+   ============================================= */
+
+/* Dark theme (default) */
+:root,
+.dark {
+  --color-bg: 8 8 10;
+  --color-surface: 15 15 18;
+  --color-surface-2: 22 22 25;
+  --color-accent: 201 168 76;
+  --color-accent-hover: 219 191 106;
+  --color-muted: 122 118 112;
+  --color-foreground: 240 236 230;
+}
+
+/* Light theme */
+.light {
+  --color-bg: 246 242 236;
+  --color-surface: 236 231 222;
+  --color-surface-2: 226 220 210;
+  --color-accent: 175 132 35;
+  --color-accent-hover: 201 168 76;
+  --color-muted: 130 122 112;
+  --color-foreground: 22 19 15;
+}
+
+/* =============================================
+   SMOOTH THEME TRANSITION
+   ============================================= */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+/* Disable transition on elements that shouldn't animate */
+img, svg, video, canvas {
+  transition: none !important;
+}
+
+/* =============================================
+   ARABIC FONT OVERRIDE
+   ============================================= */
+[dir="rtl"] body {
+  font-family: "Cairo", sans-serif;
+}
+
+[dir="rtl"] .font-display {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0 !important;
+}
+
+/* =============================================
+   FILM GRAIN OVERLAY
+   ============================================= */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.03;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Scrollbar */
+/* =============================================
+   SCROLLBAR
+   ============================================= */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #08080a;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c9a84c33;
+  background: rgb(var(--color-accent) / 0.2);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #c9a84c66;
+  background: rgb(var(--color-accent) / 0.5);
 }
 
-/* Gallery horizontal scroll hide scrollbar */
+/* =============================================
+   GALLERY SCROLLBAR HIDE
+   ============================================= */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
